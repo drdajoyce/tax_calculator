@@ -11,6 +11,7 @@ namespace TaxCalculator.Tests
             var emissions = vehicle.Co2Emissions;
             var fuelType = vehicle.FuelType;
             var cost = 0;
+            Dictionary<int, int> index = null;
 
             if (fuelType.Equals(FuelType.Electric))
             {
@@ -19,6 +20,18 @@ namespace TaxCalculator.Tests
             else if(fuelType.Equals(FuelType.Petrol))
             {
                 foreach (var taxband in PetrolPriceIndex.index)
+                {
+                    if(emissions <= taxband.Key)
+                    {
+                        return taxband.Value;
+                    }
+                }
+                return cost;
+            }
+            else if(fuelType.Equals(FuelType.Diesel))
+            {
+                index = DieselPriceIndex.index;
+                foreach (var taxband in index)
                 {
                     if(emissions <= taxband.Key)
                     {
