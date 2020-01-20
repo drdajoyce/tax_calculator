@@ -3,7 +3,6 @@ using NUnit.Framework;
 
 namespace TaxCalculator.Tests
 {
-    [Ignore("Not yet implemented")]
     class TaxCalculatorAlternativeFuelTest
     {
         private static readonly DateTime FirstOfJanuary2019 = new DateTime(2019, 1, 1);
@@ -12,7 +11,7 @@ namespace TaxCalculator.Tests
         [SetUp]
         public void BeforeEach()
         {
-            _taxCalculator = new DummyTaxCalculator();
+            _taxCalculator = new DefaultTaxCalculator();
         }
 
         [Test]

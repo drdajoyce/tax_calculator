@@ -9,29 +9,49 @@ namespace TaxCalculator.Tests
         public override int CalculateTax(Vehicle vehicle)
         {
             var emissions = vehicle.Co2Emissions;
+            var fuelType = vehicle.FuelType;
             var cost = 0;
             Dictionary<int, int> index = null;
 
-            switch (vehicle.FuelType)
+            if (fuelType.Equals(FuelType.Electric))
             {
-                case FuelType.Petrol:
-                    index = PetrolPriceIndex.index;
-                    break;
-                case FuelType.Diesel:
-                    index = DieselPriceIndex.index;
-                    break;
+                return 0;
             }
-
-            foreach (var taxband in index)
+            else if(fuelType.Equals(FuelType.Petrol))
             {
-                if (emissions <= taxband.Key)
+                foreach (var taxband in PetrolPriceIndex.index)
                 {
-                    return taxband.Value;
+                    if(emissions <= taxband.Key)
+                    {
+                        return taxband.Value;
+                    }
                 }
+                return cost;
+            }
+            else if(fuelType.Equals(FuelType.Diesel))
+            {
+                index = DieselPriceIndex.index;
+                foreach (var taxband in index)
+                {
+                    if(emissions <= taxband.Key)
+                    {
+                        return taxband.Value;
+                    }
+                }
+                return cost;
+            }
+            else if (fuelType.Equals(FuelType.AlternativeFuel))
+            {
+                foreach (var taxband in AlternativeFuelPriceIndex.index)
+                {
+                    if (emissions <= taxband.Key)
+                    {
+                        return taxband.Value;
+                    }
+                }
+                return cost;
             }
             return cost;
-
-
         }
     }
 }
