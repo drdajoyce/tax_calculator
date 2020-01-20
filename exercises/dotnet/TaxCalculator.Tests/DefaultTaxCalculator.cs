@@ -9,8 +9,18 @@ namespace TaxCalculator.Tests
         public override int CalculateTax(Vehicle vehicle)
         {
             var emissions = vehicle.Co2Emissions;
+            var cost = 0;
 
-            if(emissions == 0)
+            foreach (var taxband in PetrolPriceIndex.index)
+            {
+                if(emissions <= taxband.Key)
+                {
+                    return taxband.Value;
+                }
+            }
+            return cost;
+
+            /*if(emissions == 0)
             {
                 return 0;
             }
@@ -61,7 +71,7 @@ namespace TaxCalculator.Tests
             else
             {
                 return 2070;
-            }
+            }*/
         }
     }
 }
