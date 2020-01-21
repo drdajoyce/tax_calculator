@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\exercises",
-    "\\exercises\\dotnet"
+    "\\exercises\\dotnet",
+    "\\exercises\\dotnet\\TaxCalculator",
+    "\\exercises\\dotnet\\TaxCalculator.Tests"
   ],
-  "SelectedNode": "\\exercises\\dotnet\\TaxCalculator.sln",
+  "SelectedNode": "\\exercises\\dotnet\\TaxCalculator.Tests\\TaxCalculatorAfterFirstYearForExpensiveVehicleTest.cs",
   "PreviewInSolutionExplorer": false
 }
