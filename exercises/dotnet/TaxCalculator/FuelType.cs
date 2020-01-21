@@ -4,6 +4,7 @@
     {
         Petrol,
         Diesel,
+        DieselRDE2,
         Electric,
         AlternativeFuel
     }

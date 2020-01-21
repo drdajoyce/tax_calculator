@@ -6,16 +6,6 @@ namespace TaxCalculator.Tests
 {
     public class DefaultTaxCalculator : TaxCalculator
     {
-        private bool story4;
-        private bool story5;
-
-        public DefaultTaxCalculator (bool story4 = false, bool story5 = false)
-	{
-        this.story4 = story4;
-        this.story5 = story5;
-
-        }
-
         public override int CalculateTax(Vehicle vehicle)
         {
 
@@ -26,27 +16,38 @@ namespace TaxCalculator.Tests
             var cost = 0;
             Dictionary<int, int> index = null;
 
-            if (story5)
+            if (!year.Equals(2019) && listPrice > 40000)
             {
-                if (!year.Equals(2019) && listPrice > 40000)
+                if (fuelType.Equals(FuelType.Petrol) || fuelType.Equals(FuelType.Diesel))
                 {
-                    if (fuelType.Equals(FuelType.Petrol) || fuelType.Equals(FuelType.Diesel))
-                    {
-                        return 450;
-                    }
-                    else if (fuelType.Equals(FuelType.Electric))
-                    {
-                        return 310;
-                    }
-                    else if (fuelType.Equals(FuelType.AlternativeFuel))
-                    {
-                        return 440;
-                    }
+                    return 450;
+                }
+                else if (fuelType.Equals(FuelType.Electric))
+                {
+                    return 310;
+                }
+                else if (fuelType.Equals(FuelType.AlternativeFuel))
+                {
+                    return 440;
+                }
+            }
+            else if(!year.Equals(2019))
+            {
+                if (fuelType.Equals(FuelType.Petrol) || fuelType.Equals(FuelType.Diesel))
+                {
+                    return 140;
+                }
+                else if (fuelType.Equals(FuelType.Electric))
+                {
+                    return 0;
+                }
+                else if (fuelType.Equals(FuelType.AlternativeFuel))
+                {
+                    return 130;
                 }
             }
             else
             {
-
                 if (fuelType.Equals(FuelType.Electric))
                 {
                     return 0;
@@ -86,7 +87,7 @@ namespace TaxCalculator.Tests
                     return cost;
                 }
             }
-                return cost;
-            }
+            return cost;
         }
     }
+}
