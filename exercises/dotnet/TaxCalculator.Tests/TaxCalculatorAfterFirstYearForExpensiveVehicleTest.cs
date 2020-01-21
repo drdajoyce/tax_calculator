@@ -11,7 +11,7 @@ namespace TaxCalculator.Tests
         [SetUp]
         public void BeforeEach()
         {
-            _taxCalculator = new DefaultTaxCalculator(false, true);
+            _taxCalculator = new DefaultTaxCalculator();
         }
 
         [Test]
