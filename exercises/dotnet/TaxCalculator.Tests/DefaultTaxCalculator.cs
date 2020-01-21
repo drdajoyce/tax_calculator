@@ -22,43 +22,64 @@ namespace TaxCalculator.Tests
             var cost = 0;
             Dictionary<int, int> index = null;
 
-            if (fuelType.Equals(FuelType.Electric))
+            if (story5)
             {
-                return 0;
-            }
-            else if(fuelType.Equals(FuelType.Petrol))
-            {
-                foreach (var taxband in PetrolPriceIndex.index)
+                if (!year.Equals(2019) && listPrice > 40000)
                 {
-                    if(emissions <= taxband.Key)
+                    if (fuelType.Equals(FuelType.Petrol) || fuelType.Equals(FuelType.Diesel))
                     {
-                        return taxband.Value;
+                        return 450;
+                    }
+                    else if (fuelType.Equals(FuelType.Electric))
+                    {
+                        return 310;
+                    }
+                    else if (fuelType.Equals(FuelType.AlternativeFuel))
+                    {
+                        return 440;
                     }
                 }
-                return cost;
             }
-            else if(fuelType.Equals(FuelType.Diesel))
+            else
             {
-                index = DieselPriceIndex.index;
-                foreach (var taxband in index)
+                if (fuelType.Equals(FuelType.Electric))
                 {
-                    if(emissions <= taxband.Key)
-                    {
-                        return taxband.Value;
-                    }
+                    return 0;
                 }
-                return cost;
-            }
-            else if (fuelType.Equals(FuelType.AlternativeFuel))
-            {
-                foreach (var taxband in AlternativeFuelPriceIndex.index)
+                else if (fuelType.Equals(FuelType.Petrol))
                 {
-                    if (emissions <= taxband.Key)
+                    foreach (var taxband in PetrolPriceIndex.index)
                     {
-                        return taxband.Value;
+                        if (emissions <= taxband.Key)
+                        {
+                            return taxband.Value;
+                        }
                     }
+                    return cost;
                 }
-                return cost;
+                else if (fuelType.Equals(FuelType.Diesel))
+                {
+                    index = DieselPriceIndex.index;
+                    foreach (var taxband in index)
+                    {
+                        if (emissions <= taxband.Key)
+                        {
+                            return taxband.Value;
+                        }
+                    }
+                    return cost;
+                }
+                else if (fuelType.Equals(FuelType.AlternativeFuel))
+                {
+                    foreach (var taxband in AlternativeFuelPriceIndex.index)
+                    {
+                        if (emissions <= taxband.Key)
+                        {
+                            return taxband.Value;
+                        }
+                    }
+                    return cost;
+                }
             }
             return cost;
         }
