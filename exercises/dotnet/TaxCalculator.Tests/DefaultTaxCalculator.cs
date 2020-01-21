@@ -6,12 +6,26 @@ namespace TaxCalculator.Tests
 {
     public class DefaultTaxCalculator : TaxCalculator
     {
+        private bool story4;
+
+        public DefaultTaxCalculator (bool story4 = false)
+	{
+        this.story4 = story4;
+	}
+
         public override int CalculateTax(Vehicle vehicle)
         {
+
             var emissions = vehicle.Co2Emissions;
             var fuelType = vehicle.FuelType;
             var cost = 0;
             Dictionary<int, int> index = null;
+
+            if (vehicle.DateOfFirstRegistration )
+            {
+            }
+
+
 
             if (fuelType.Equals(FuelType.Electric))
             {
