@@ -14,7 +14,6 @@ namespace TaxCalculator.Tests
             var year = vehicle.DateOfFirstRegistration.Year;
             var listPrice = vehicle.ListPrice;
             var cost = 0;
-            Dictionary<int, int> index = null;
 
             if (!year.Equals(2019) && listPrice > 40000)
             {
@@ -52,39 +51,31 @@ namespace TaxCalculator.Tests
                 {
                     return 0;
                 }
-                else if (fuelType.Equals(FuelType.Petrol))
+                else if (fuelType.Equals(FuelType.Petrol) || fuelType.Equals(FuelType.DieselRDE2))
                 {
-                    foreach (var taxband in PetrolPriceIndex.index)
-                    {
-                        if (emissions <= taxband.Key)
-                        {
-                            return taxband.Value;
-                        }
-                    }
-                    return cost;
+                    return GetTaxBandFromEmissions(emissions, cost, PetrolPriceIndex.index);
+
                 }
                 else if (fuelType.Equals(FuelType.Diesel))
                 {
-                    index = DieselPriceIndex.index;
-                    foreach (var taxband in index)
-                    {
-                        if (emissions <= taxband.Key)
-                        {
-                            return taxband.Value;
-                        }
-                    }
-                    return cost;
+                    return GetTaxBandFromEmissions(emissions, cost, DieselPriceIndex.index);
+
                 }
                 else if (fuelType.Equals(FuelType.AlternativeFuel))
                 {
-                    foreach (var taxband in AlternativeFuelPriceIndex.index)
-                    {
-                        if (emissions <= taxband.Key)
-                        {
-                            return taxband.Value;
-                        }
-                    }
-                    return cost;
+                    return GetTaxBandFromEmissions(emissions, cost, AlternativeFuelPriceIndex.index);
+                }
+            }
+            return cost;
+        }
+
+        private static int GetTaxBandFromEmissions(int emissions, int cost, Dictionary<int, int> index)
+        {
+            foreach (var taxband in index)
+            {
+                if (emissions <= taxband.Key)
+                {
+                    return taxband.Value;
                 }
             }
             return cost;
