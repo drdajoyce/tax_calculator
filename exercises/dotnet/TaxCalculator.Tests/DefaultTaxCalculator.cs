@@ -14,8 +14,9 @@ namespace TaxCalculator.Tests
             var year = vehicle.DateOfFirstRegistration.Year;
             var listPrice = vehicle.ListPrice;
             var cost = 0;
+            var currentYear = 2019;
 
-            if (!year.Equals(2019) && listPrice > 40000)
+            if (!year.Equals(currentYear) && listPrice > 40000)
             {
                 if (fuelType.Equals(FuelType.Petrol) || fuelType.Equals(FuelType.Diesel))
                 {
@@ -30,7 +31,7 @@ namespace TaxCalculator.Tests
                     return 440;
                 }
             }
-            else if(!year.Equals(2019))
+            else if(!year.Equals(currentYear))
             {
                 if (fuelType.Equals(FuelType.Petrol) || fuelType.Equals(FuelType.Diesel))
                 {
@@ -53,32 +54,34 @@ namespace TaxCalculator.Tests
                 }
                 else if (fuelType.Equals(FuelType.Petrol) || fuelType.Equals(FuelType.DieselRDE2))
                 {
-                    return GetTaxBandFromEmissions(emissions, cost, PetrolPriceIndex.index);
+                    return GetTaxBandFromEmissions(emissions, PetrolPriceIndex.index);
 
                 }
                 else if (fuelType.Equals(FuelType.Diesel))
                 {
-                    return GetTaxBandFromEmissions(emissions, cost, DieselPriceIndex.index);
+                    return GetTaxBandFromEmissions(emissions, DieselPriceIndex.index);
 
                 }
                 else if (fuelType.Equals(FuelType.AlternativeFuel))
                 {
-                    return GetTaxBandFromEmissions(emissions, cost, AlternativeFuelPriceIndex.index);
+                    return GetTaxBandFromEmissions(emissions, AlternativeFuelPriceIndex.index);
                 }
             }
             return cost;
         }
 
-        private static int GetTaxBandFromEmissions(int emissions, int cost, Dictionary<int, int> index)
+        private static int GetTaxBandFromEmissions(int emissions, Dictionary<int, int> index)
         {
+            var result = 0;
             foreach (var taxband in index)
             {
                 if (emissions <= taxband.Key)
                 {
-                    return taxband.Value;
+                    result = taxband.Value;
+                    break;
                 }
             }
-            return cost;
+            return result;
         }
     }
 }
