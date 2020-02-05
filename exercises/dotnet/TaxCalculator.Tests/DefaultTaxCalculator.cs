@@ -18,56 +18,52 @@ namespace TaxCalculator.Tests
 
             if (!year.Equals(currentYear) && listPrice > 40000)
             {
-                if (fuelType.Equals(FuelType.Petrol) || fuelType.Equals(FuelType.Diesel))
-                {
-                    return 450;
-                }
-                else if (fuelType.Equals(FuelType.Electric))
-                {
-                    return 310;
-                }
-                else if (fuelType.Equals(FuelType.AlternativeFuel))
-                {
-                    return 440;
-                }
+                cost = GetTaxBandFromFuelAfterYearOne(fuelType, 450, 310, 440);
             }
             else if(!year.Equals(currentYear))
             {
-                if (fuelType.Equals(FuelType.Petrol) || fuelType.Equals(FuelType.Diesel))
-                {
-                    return 140;
-                }
-                else if (fuelType.Equals(FuelType.Electric))
-                {
-                    return 0;
-                }
-                else if (fuelType.Equals(FuelType.AlternativeFuel))
-                {
-                    return 130;
-                }
+                cost = GetTaxBandFromFuelAfterYearOne(fuelType, 140, 0, 130);
             }
             else
             {
                 if (fuelType.Equals(FuelType.Electric))
                 {
-                    return 0;
+                    cost = 0;
                 }
                 else if (fuelType.Equals(FuelType.Petrol) || fuelType.Equals(FuelType.DieselRDE2))
                 {
-                    return GetTaxBandFromEmissions(emissions, PetrolPriceIndex.index);
+                    cost = GetTaxBandFromEmissions(emissions, PetrolPriceIndex.index);
 
                 }
                 else if (fuelType.Equals(FuelType.Diesel))
                 {
-                    return GetTaxBandFromEmissions(emissions, DieselPriceIndex.index);
+                    cost = GetTaxBandFromEmissions(emissions, DieselPriceIndex.index);
 
                 }
                 else if (fuelType.Equals(FuelType.AlternativeFuel))
                 {
-                    return GetTaxBandFromEmissions(emissions, AlternativeFuelPriceIndex.index);
+                    cost = GetTaxBandFromEmissions(emissions, AlternativeFuelPriceIndex.index);
                 }
             }
             return cost;
+        }
+
+        private static int GetTaxBandFromFuelAfterYearOne(FuelType fuelType, int petrolDieselCost, int electricCost, int alternativeFuelCost)
+        {
+            var result = 0;
+            if (fuelType.Equals(FuelType.Petrol) || fuelType.Equals(FuelType.Diesel))
+            {
+                result = petrolDieselCost;
+            }
+            else if (fuelType.Equals(FuelType.Electric))
+            {
+                result = electricCost;
+            }
+            else if (fuelType.Equals(FuelType.AlternativeFuel))
+            {
+                result = alternativeFuelCost;
+            }
+            return result;
         }
 
         private static int GetTaxBandFromEmissions(int emissions, Dictionary<int, int> index)
