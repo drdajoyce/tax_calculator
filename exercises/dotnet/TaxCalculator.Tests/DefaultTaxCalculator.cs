@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace TaxCalculator.Tests
 {
@@ -8,7 +6,6 @@ namespace TaxCalculator.Tests
     {
         public override int CalculateTax(Vehicle vehicle)
         {
-
             var emissions = vehicle.Co2Emissions;
             var fuelType = vehicle.FuelType;
             var year = vehicle.DateOfFirstRegistration.Year;
@@ -16,13 +13,16 @@ namespace TaxCalculator.Tests
             var cost = 0;
             var currentYear = 2019;
 
-            if (!year.Equals(currentYear) && listPrice > 40000)
+            if (!year.Equals(currentYear))
             {
-                cost = GetTaxBandFromFuelAfterYearOne(fuelType, 450, 310, 440);
-            }
-            else if(!year.Equals(currentYear))
-            {
-                cost = GetTaxBandFromFuelAfterYearOne(fuelType, 140, 0, 130);
+                if (listPrice > 40000)
+                {
+                    cost = GetTaxBandFromFuelAfterYearOne(fuelType, 450, 310, 440);
+                }
+                else
+                {
+                    cost = GetTaxBandFromFuelAfterYearOne(fuelType, 140, 0, 130);
+                }
             }
             else
             {
